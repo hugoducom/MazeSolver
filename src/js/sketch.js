@@ -24,6 +24,7 @@ var generatedCells = 1; // nombre de cellules générées (pour les données)
 var cellStack = []; // stack pour le backtrack (revenir en arrière dans une impasse)
 
 // SOLVING VARIABLES
+var openCells = 0; // longueur du chemin de résolution
 var isSolved = false; // éviter de répéter le code de résolution après résolution
 var solveLoop = false; // lance la résolution du labyrinthe
 var start = [0, 0]; // coordonnées du noeud de départ
@@ -123,6 +124,9 @@ function draw() {
     if (solveLoop && !isSolved) {
         let neighbours = currentNode.getReachableNeighbours();
 
+        if (currentNode.open != -1) {
+            openCells++;
+        }
         currentNode.open = -1; // ferme le noeud
         startAnimation(currentNode);
 
@@ -147,12 +151,14 @@ function draw() {
             }
         } else {
             currentNode.open = 2; // on bannit la cellule, car cul-de-sac
+            openCells--;
             currentNode = currentNode.parent;
         }
         
         // si le noeud obtenu est la cible, on arrête
         if (currentNode == targetNode) {
             currentNode.open = -1;
+            openCells++;
             isSolved = true;
             chronoStop();
             document.getElementById("downloadBtn").disabled = false;
@@ -161,15 +167,5 @@ function draw() {
     }
     // FIN ALGORITHME DE RÉSOLUTION
 
-    // MISE À JOUR LE COMPTAGE DES CELLULES
-    let openCells = 0;
-    for (let i = 0; i < side; i++) {
-        for (let j = 0; j < side; j++) {
-            if (cells[i][j].open == -1) {
-                openCells++;
-            }
-        }
-    }
     document.getElementById("routeLength").innerHTML = openCells;
-    // FIN MISE À JOUR LE COMPTAGE DES CELLULES
 }

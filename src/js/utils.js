@@ -55,6 +55,7 @@ function clearMaze() {
     document.getElementById("generationTime").innerHTML = "00:00:000";
     document.getElementById("solvingTime").innerHTML = "00:00:000";
     generatedCells = 1;
+    openCells = 0;
     current = cells[0][0];
     loop();
 }
