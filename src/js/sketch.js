@@ -2,11 +2,11 @@
  * Lieu        : ETML, Lausanne
  * Auteur      : Hugo Ducommun
  * Date        : 11.06.2020
- * Description : Fichier de base de la librairie p5.js
+ * Description : Script de base de la librairie p5.js
 */
 
 // GENERAL VARIABLES
-var canvas;
+var canvas; // canvas du labyrinthe
 var side = document.getElementById("sideNumber").value; // nombre de cellules sur les côtls du labyrinthe (labyrinthe carré)
 var cells = create2dArray(side, side); // tableau de toutes les cellules
 var isMovingNode = false; // si le joueur glisse un noeud (start ou target) pour le déplacer
@@ -20,7 +20,7 @@ var rate = 60; // frameRate
 // GENERATION VARIABLES
 var generation = false; // lance la génération du labyrinthe
 var current; // cellule qui est actuellement "analysée"
-var generatedCells = 1; // nombre de cellules générées (data)
+var generatedCells = 1; // nombre de cellules générées (pour les données)
 var cellStack = []; // stack pour le backtrack (revenir en arrière dans une impasse)
 
 // SOLVING VARIABLES
@@ -36,6 +36,7 @@ var startNode; // noeud de départ
  * Fonction setup de la librairie p5.js
  */
 function setup() {
+    // Création du canvas
     canvas = createCanvas(600, 600);
     canvas.parent("mazeParent");
     // Désactive les boutons qu'il faut
@@ -51,22 +52,22 @@ function setup() {
         }
     }
 
-    // SOLVING
+    // Met en place les noeuds après création de la grille
     targetNode = cells[target[0]][target[1]];
     startNode = cells[start[0]][start[1]];
     currentNode = cells[start[0]][start[1]];
-    // END SOLVING
 
-    current = cells[start[0]][start[1]]; // par défaut, on commence à la case de départ
+    // Par défaut, la génération commence à la case de départ
+    current = cells[start[0]][start[1]]; 
 }
 
 /*
- * Fonction draw de la librairie p5.js
+ * Fonction draw de la librairie p5.js (activée toute les frameRate)
  */
 function draw() {
     background(50);
 
-    // SET THE FRAMERATE
+    // FRAMERATE
     if (document.getElementById("slow").checked == true) {
         rate = 10;
     } else if (document.getElementById("fast").checked == true) {
@@ -75,17 +76,17 @@ function draw() {
         rate = 30;
     }
     frameRate(rate);
-    // END SET THE FRAMERATE
+    // FIN FRAMERATE
 
-    // DRAW THE CELLS
+    // DESSINE LES CELLULES
     for (let i = 0; i < side; i++) {
         for (let j = 0; j < side; j++) {
             cells[i][j].draw();
         }
     }
-    // END DRAW THE CELLS
+    // FIN DESSINE LES CELLULES
     
-    // MAZE GENERATOR
+    // ALGORITHME DE GÉNÉRATION (BACKTRACK)
     if (generation) {
         current.visited = true;
         if (!isFinished()) {
@@ -107,7 +108,7 @@ function draw() {
         startAnimation(current);
         document.getElementById("clearBtn").disabled = false;
     }
-    // END MAZE GENERATOR
+    // FIN ALGORITHME DE GÉNÉRATION
 
     if (isFinished() && current.i == start[0] && current.j == start[1] && !solveLoop) {
         generation = false;
@@ -116,7 +117,7 @@ function draw() {
         chronoStop();
     }
 
-    // MAZE SOLVING
+    // ALGORITHME DE RÉSOLUTION (DEPTH-FIRST SEARCH)
     if (solveLoop && !isSolved) {
         let neighbours = currentNode.getReachableNeighbours();
 
@@ -156,9 +157,9 @@ function draw() {
             document.getElementById("stopStartBtn").disabled = true;
         }
     }
-    // END MAZE SOLVING
+    // FIN ALGORITHME DE RÉSOLUTION
 
-    // UPDATE THE OPEN CELLS COUNT
+    // MISE À JOUR LE COMPTAGE DES CELLULES
     let openCells = 0;
     for (let i = 0; i < side; i++) {
         for (let j = 0; j < side; j++) {
@@ -168,67 +169,5 @@ function draw() {
         }
     }
     document.getElementById("routeLength").innerHTML = openCells;
-    // END UPDATE THE OPEN CELLS COUNT
-}
-
-/*
- * Lorsque l'utilisateur clique (et reste appuyé)
- */
-function mousePressed() {
-    // seulement si le labyrinthe n'est pas en génération ou en résolution
-    if (!generation && !solveLoop && !isSolved) {
-        for (let i = 0; i < side; i++) {
-            for (let j = 0; j < side; j++) {
-                if (cells[i][j].x < mouseX && mouseX < cells[i][j].x + cells[i][j].w) {
-                    if (cells[i][j].y < mouseY && mouseY < cells[i][j].y + cells[i][j].h) {
-                        if (cells[i][j] === startNode) {
-                            isMovingNode = true;
-                            movingNode = startNode;
-                        } else if (cells[i][j] === targetNode) {
-                            isMovingNode = true;
-                            movingNode = targetNode;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-/*
- * Lorsque l'utilisateur glisse un noeud pour le changer de place
- */
-function mouseDragged() {
-    for (let i = 0; i < side; i++) {
-        for (let j = 0; j < side; j++) {
-            if (cells[i][j].x < mouseX && mouseX < cells[i][j].x + cells[i][j].w) {
-                if (cells[i][j].y < mouseY && mouseY < cells[i][j].y + cells[i][j].h) {
-                    if (cells[i][j] !== startNode && movingNode === startNode && cells[i][j] !== targetNode) {
-                        startNode = cells[i][j];
-                        movingNode = startNode;
-                        start[0] = i;
-                        start[1] = j;
-                    } else if (cells[i][j] !== targetNode && movingNode === targetNode && cells[i][j] !== startNode) {
-                        targetNode = cells[i][j];
-                        movingNode = targetNode;
-                        target[0] = i;
-                        target[1] = j;
-                    }
-                    document.getElementById("startCoord").innerHTML = "(" + start[0] + ", " + start[1] + ")";
-                    document.getElementById("targetCoord").innerHTML = "(" + target[0] + ", " + target[1] + ")";
-                }
-            }
-        }
-    }
-}
-
-/*
- * Lorsque l'utilisateur relâche la souris
- */
-function mouseReleased() {
-    // désactive toutes les variables
-    if (movingNode) {
-        isMovingNode = false;
-        movingNode = null;
-    }
+    // FIN MISE À JOUR LE COMPTAGE DES CELLULES
 }

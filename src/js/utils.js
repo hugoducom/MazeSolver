@@ -2,7 +2,7 @@
  * Lieu        : ETML, Lausanne
  * Auteur      : Hugo Ducommun
  * Date        : 19.06.2020
- * Description : Fonctions diverses du projet
+ * Description : Fonctions utilitaires diverses du projet
 */
 
 /*
@@ -16,6 +16,7 @@ function clearMaze() {
     document.getElementById("downloadBtn").disabled = true;
     document.getElementById("stopStartBtn").disabled = true;
     document.getElementById("sideNumber").disabled = false;
+
     document.getElementById("stopStartBtn").firstChild.data = "Stop";
 
     chronoStopReset();

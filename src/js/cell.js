@@ -31,10 +31,12 @@ class Cell {
     * Fonction qui dessine la cellule
     */
     draw() {
+        // apparition progressive
         if (this.fade < 100) {
             this.fade += 5;
         }
 
+        // murs
         stroke(255);
         if (this.walls[0]) {
             line(this.x, this.y, this.x + this.w, this.y);
@@ -77,7 +79,7 @@ class Cell {
 
     /*
     * Fonction qui vérifie si les cellules voisines sont visitées ou pas (generation)
-    * return : une cellule voisine non visitée prise au hasard
+    * @return : une cellule voisine non visitée prise au hasard
     */
     checkNeighbours() {
         var availableNeighbours = [];
@@ -101,7 +103,7 @@ class Cell {
     }
 
     /*
-    * Met en valeur la cellule "current" (generation)
+    * Met en valeur en vert la cellule "current" (generation)
     */
     highlight() {
         noStroke();
@@ -111,7 +113,7 @@ class Cell {
 
     /*
     * Renvoie les voisins atteignables ouverts de la cellule actuelle (solving)
-    * return : un tableau des cellules
+    * @return : un tableau des cellules
     */
     getReachableNeighbours() {
         let reachableNeighbours = [];
@@ -121,6 +123,7 @@ class Cell {
         if (this.j != side - 1) { var right = cells[this.i][this.j + 1]; }
         if (this.i != side - 1) { var bottom = cells[this.i + 1][this.j]; }
 
+        // il ne doit pas y avoir de murs entre les deux et il faut que la cellule voisine soit neutre
         if (!this.walls[0] && top && top.open == 0) { reachableNeighbours.push(top); }
         if (!this.walls[1] && right && right.open == 0) { reachableNeighbours.push(right); }
         if (!this.walls[2] && bottom && bottom.open == 0) { reachableNeighbours.push(bottom); }

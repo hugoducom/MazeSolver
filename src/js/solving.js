@@ -9,7 +9,7 @@
  * Calcule la distance entre deux cases
  * @param start, case de départ [Cell]
  * @param goal, case objectif [Cell]
- * return : nombre de pixels entre les deux coins haut gauche des cases
+ * @return : nombre de pixels entre les deux coins haut gauche des cases
  */
 function distance(start, goal) {
     let x = goal.x - start.x;

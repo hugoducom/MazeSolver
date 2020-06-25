@@ -34,6 +34,7 @@ function isFinished() {
             }
         }
     }
+    // vérifie que la cellule courante est retournée au point de départ
     if (current.i != start[0] || current.j != start[1]) {
         finished = false;
     }
@@ -41,7 +42,7 @@ function isFinished() {
 }
 
 /*
- * Fonction qui enlève les murs entre la cellule current et next
+ * Fonction qui enlève les murs entre la cellule current et next passées en paramètre
  * @param current, case actuelle
  * @param next, prochaine case vers laquelle bouger
  */
