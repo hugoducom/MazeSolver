@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr-CH">
+    <head>
+        <!--
+            Lieu        : ETML, Lausanne
+            Auteur      : Hugo Ducommun
+            Date        : 11.06.2020
+            Description : Maze solving algorithm page
+        -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="../../resources/img/favicon.png">
+        <!-- Font-Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+        <!-- Stylesheet -->
+        <link rel="stylesheet" href="../../resources/css/style.css" type="text/css">
+        <!-- Bootstrap CDN -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+        <title>DemoMot 2020 - HDN</title>
+    </head>
+    <body>
+
+        <a id="logo" class="navbar-brand" href="index.html">
+            <img src="../../resources/img/logo.png" width="45" height="30" alt="Logo de Maze Solver">
+        </a>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Accueil<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="algorithm.html"><i class="fas fa-code"></i> Algorithme</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container-fluid text-center">
+            <h1 class="display-4 mt-2" id="title">Maze Solver</h1><br>
+            <div class="row">
+                <div class="col-3">
+                    <h1>Paramètres</h1>
+                    <div>
+                        <legend><i class="fas fa-play-circle"></i> Actions</legend>
+                        <button id="stopStartBtn" class="btn btn-primary" onclick="stopStart()">Stop</button>
+                        <button id="generationBtn" class="btn btn-primary" onclick="generate()">Générer</button><br>
+                        <button id="clearBtn" class="btn btn-primary" onclick="clearMaze()">Effacer</button>
+                        <button id="solveBtn" class="btn btn-primary" onclick="solveMaze()">Résoudre</button>
+                    </div>
+                    <div>
+                        <legend><i class="fas fa-vector-square"></i> Longueur des côtés</legend>
+                        <input id="sideNumber" type="number" min="5" max="40" value="20" onchange="modifySideNumber()">
+                    </div>
+                    <div>
+                        <legend><i class="fas fa-tachometer-alt"></i> Vitesse d'exécution</legend>
+                        <input type="radio" id="slow" name="speed" value="lent">
+                        <label for="slow">Lent</label><br>
+                        <input type="radio" id="normal" name="speed" value="normal">
+                        <label for="normal">Normal</label><br>
+                        <input type="radio" id="fast" name="speed" value="rapide" checked>
+                        <label for="fast">Rapide</label><br>
+                    </div>
+                    <div class="my-3">
+                        <legend><i class="fas fa-star"></i> Animations</legend>
+                        <input id="animationDisabled" type="checkbox">
+                        <label for="animationDisabled">Animations désactivées</label>
+                    </div>
+                    <div>
+                        <legend><i class="fas fa-lightbulb"></i> Astuce</legend>
+                        <p>Vous pouvez déplacer les noeuds de départ et d'arrivée avec la souris (drag and drop) lorsque la génération ou la résolution ne sont pas en cours.</p>
+                    </div>
+                </div>
+                <div class="col-6 text-center">
+                    <div id="mazeParent" onload="mazeAnimation()">
+                        <!-- maze will be insert here -->
+                    </div>
+                    <div>
+                        <button id="downloadBtn" class="btn btn-primary" onclick="downloadMaze()">Télécharger (après résolution)</button>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <h1>Données</h1>
+                    <legend><i class="fas fa-th"></i> Cellules générées</legend>
+                    <p id="visitedCells" class="my-0">0</p>
+                    <p id="generationPercent">0 %</p>
+                    <legend><i class="fas fa-stopwatch"></i> Temps de génération</legend>
+                    <p id="generationTime" class="my-0">00:00:000</p>
+                    <legend><i class="fas fa-arrows-alt-h"></i> Longueur du chemin</legend>
+                    <p id="routeLength" class="my-0">0</p>
+                    <legend><i class="fas fa-stopwatch"></i> Temps de résolution</legend>
+                    <p id="solvingTime">00:00:000</p>
+                    <legend><i class="fas fa-map-pin"></i> Noeud de départ</legend>
+                    <p id="startCoord">(0, 0)</p>
+                    <legend><i class="fas fa-map-pin"></i> Noeud cible</legend>
+                    <p id="targetCoord">(0, 0)</p>
+                </div>
+            </div>
+        </div>
+    </body>
+    <footer>
+        <div class="text-center bg-dark py-2 text-light">
+            <h5>&copy; Hugo Ducommun - ETML - DemoMot 2020</h5>
+        </div>
+        <script src="../../resources/lib/p5/p5.min.js"></script>
+        <script src="../js/cell.js"></script>
+        <script src="../js/generation.js"></script>
+        <script src="../js/solving.js"></script>
+        <script src="../js/utils.js"></script>
+        <script src="../js/chrono.js"></script>
+        <script src="../js/sketch.js"></script>
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    </footer>
+</html>

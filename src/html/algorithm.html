@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr-CH">
+    <head>
+        <!--
+            Lieu        : ETML, Lausanne
+            Auteur      : Hugo Ducommun
+            Date        : 11.06.2020
+            Description : Maze solving algorithm page
+        -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="../../resources/img/favicon.png">
+        <!-- Font-Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+        <!-- Stylesheet -->
+        <link rel="stylesheet" href="../../resources/css/style.css" type="text/css">
+        <!-- Bootstrap CDN -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+        <title>DemoMot 2020 - HDN</title>
+    </head>
+    <body>
+
+        <a id="logo" class="navbar-brand" href="index.html">
+            <img src="../../resources/img/logo.png" width="45" height="30" alt="">
+        </a>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Accueil</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="algorithm.html"><i class="fas fa-code"></i> Algorithme<span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="text-center">
+                <h1 class="display-4 mt-2" id="title">Depth-first search</h1><br>
+            </div>
+            <p>
+                L'algorithme implémenté dans Maze Solver est une variante "maison" intelligente de l'algorithme <a target="_blank" href="https://en.wikipedia.org/wiki/Depth-first_search">Depth-first search</a> aussi appelé DFS pour simplifier.
+                Il faut savoir qu'il ne trouve pas forcèment le chemin le plus court. La manière dont il a été implémenté ne fait pas lui un algorithme qui supporte les poids.<br>
+                DFS visite un chemin pris au hasard et si celui-ci mène à un cul-de-sac, il rebrousse chemin jusqu'à trouver un chemin non visité. La différence entre DFS et notre petit algorithme, c'est que le nôtre ne prend pas un chemin par hasard.
+                Lorsqu'il a le choix entre plusieurs chemins, il choisra systèmatiquement la case la plus proche de la sortie. Cela évitera ainsi les cul-des-sac inutiles.
+            </p>
+            <p>
+                Nous n'allons pas nous intéresser à la génération du labyrinthe, qui utilise un algorithme dit <a target="_blank" href="https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_backtracker">backtrack</a>.
+                Cet algorithme permet obligatoirement qu'un chemin vers la cible existe.
+            </p>
+            <div class="text-center">
+                <h3>Fonctionnement</h3>
+            </div>
+            <p>
+                Pour commencer, un peu de vocabulaire. Dans des algorithmes concernant la théorie des graphes (comme résoudre un labyrinthe), nous n'appelerons pas les cellules des cases mais des <strong>noeuds</strong>.
+            </p>
+            <p>
+                Il faut tout d'abord savoir que chaque cellule peut être dans 4 états différents. L'état ouvert (rouge), l'état neutre (bleu), l'état fermé (vert) ou l'état banni (noir).<br>
+                - Ouvert = Noeud actuel<br>
+                - Neutre = Noeud pas encore visité et donc atteignable<br>
+                - Fermé = Noeud déjà visité faisant apparemment parti du chemin final<br>
+                - Banni = Noeud déjà visité mais menant à un cul-de-sac
+            </p>
+            <p>Voici une image pour vous appuyez dans la compréhension :</p>
+            <div class="text-center mb-3">
+                <img src="../../resources/img/example.PNG" alt="Image d'exemple de la résolution du labyrinthe">
+            </div>
+            <p>Et donc voici un pseudo-code très fancisé pour une compréhension optimale :</p>
+            <ul>
+                <li>Définir le point de départ (noeud actuel)</li>
+                <li>Tant que la noeud actuel n'est pas la cellule cible</li>
+                <ul>
+                    <li>Ferme le noeud actuel (plus atteignable)</li>
+                    <li>S'il n'y a qu'un voisin atteignable</li>
+                    <ul>
+                        <li>Noeud actuel = voisin</li>
+                    </ul>
+                    <li>S'il y en a plusieurs</li>
+                    <ul>
+                        <li>Noeud actuel = voisin le plus proche de la cellule cible</li>
+                    </ul>
+                    <li>S'il n'y en a aucun</li>
+                    <ul>
+                        <li>Noeud actuel banni (cul-de-sac)</li>
+                        <li>Noeud actuel = Noeud parent du noeud actuel (retour en arrière)</li>
+                    </ul>
+                </ul>
+            </ul>
+
+            <div class="text-center">
+                <h3>Code simplifié (JavaScript)</h3>
+            </div>
+            <pre>
+                <code class="language-javascript">
+                    currentNode = cells[0][0];
+
+                    while (!isSolved) {
+                        currentNode.open = -1; // ferme le noeud
+                        let neighbours = currentNode.getReachableNeighbours();
+
+                        if (neighbours) {
+                            // s'il n'y a qu'une possibilité
+                            if (neighbours.length == 1) {
+                                neighbours[0].parent = currentNode;
+                                neighbours[0].open = 1; // ouvre le noeud
+                                currentNode = neighbours[0];
+                            } else {
+                                let dist = Infinity;
+                                // choisis le noeud le plus près de la cible
+                                for (let i = 0; i &lt; neighbours.length; i++) {
+                                    if (dist > distance(neighbours[i], targetNode)) {
+                                        dist = distance(neighbours[i], targetNode);
+                                        bestCell = neighbours[i];
+                                    }
+                                }
+                                bestCell.parent = currentNode;
+                                bestCell.open = 1; // ouvre le noeud
+                                currentNode = bestCell;
+                            }
+                        } else {
+                            // s'il n'y a aucun voisin libre
+                            currentNode.open = 2; // on bannit la cellule, car cul-de-sac
+                            currentNode = currentNode.parent;
+                        }
+                        
+                        // si le noeud obtenu est la cible, on arrête
+                        if (currentNode === targetNode) {
+                            currentNode.open = -1; // ferme le noeud
+                            isSolved = true;
+                        }
+                    }
+                </code>
+            </pre>
+        </div>
+
+    </body>
+    <footer style="position: relative;">
+        <div class="text-center bg-dark py-2 text-light">
+            <h5>&copy; Hugo Ducommun - ETML - DemoMot 2020</h5>
+        </div>
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    </footer>
+</html>

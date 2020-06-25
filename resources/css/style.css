@@ -1,0 +1,37 @@
+/*
+ * Lieu        : ETML, Lausanne
+ * Auteur      : Hugo Ducommun
+ * Date        : 19.06.2020
+ * Description : Feuille de style de base
+*/
+
+body {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#logo {
+    position: absolute;
+    z-index: 1;
+    padding: 8px 16px;
+}
+
+#title {
+    font-weight: 700;
+}
+
+#generationBtn, #clearBtn, #solveBtn, #downloadBtn, #stopStartBtn {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+#sideNumber, #mazeParent, #animationDisabled {
+    margin-bottom: 10px;
+}
