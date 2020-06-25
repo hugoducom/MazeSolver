@@ -100,8 +100,10 @@ function draw() {
             removeWalls(current, nextCell);
             current = nextCell;
             generatedCells += 1;
-            document.getElementById("visitedCells").innerHTML = generatedCells;
-            document.getElementById("generationPercent").innerHTML = floor((generatedCells / (side * side)) * 100) + " %";
+            let percent = floor((generatedCells / (side * side)) * 100) + "%";
+            document.getElementById("progressBar").style.width = percent;
+            document.getElementById("progressBar").innerHTML = percent;
+            document.getElementById("visitedCells").innerHTML = generatedCells + " / " + side*side;
         } else if (cellStack.length > 0) {
             current = cellStack.pop();
         }

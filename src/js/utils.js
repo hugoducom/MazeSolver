@@ -48,8 +48,9 @@ function clearMaze() {
         }
     }
 
-    document.getElementById("visitedCells").innerHTML = 0;
-    document.getElementById("generationPercent").innerHTML = 0 + " %";
+    document.getElementById("visitedCells").innerHTML = 0 + " / " + side * side;
+    document.getElementById("progressBar").style.width = "0%";
+    document.getElementById("progressBar").innerHTML = "";
     document.getElementById("routeLength").innerHTML = 0;
     document.getElementById("generationTime").innerHTML = "00:00:000";
     document.getElementById("solvingTime").innerHTML = "00:00:000";
@@ -120,6 +121,7 @@ function modifySideNumber() {
         target = [side - 1, side - 1];
         document.getElementById("startCoord").innerHTML = "(" + start[0] + ", " + start[1] + ")";
         document.getElementById("targetCoord").innerHTML = "(" + target[0] + ", " + target[1] + ")";
+        document.getElementById("visitedCells").innerHTML = 0 + " / " + side * side;
         cells = create2dArray(side, side);
         setup(); // relance le programme
         loop();
