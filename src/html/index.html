@@ -24,11 +24,13 @@
         <title>DemoMot 2020 - HDN</title>
     </head>
     <body>
-
-        <a id="logo" class="navbar-brand" href="index.html">
-            <img src="../../resources/img/logo.png" width="45" height="30" alt="Logo de Maze Solver">
-        </a>
+        
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+            <a id="logo" class="navbar-brand" href="index.html">
+                <img src="../../resources/img/logo.png" width="45" height="30" alt="Logo de Maze Solver">
+            </a>
+            
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -47,8 +49,8 @@
 
         <div class="container-fluid text-center">
             <h1 class="display-4 mt-2" id="title">Maze Solver</h1><br>
-            <div class="row">
-                <div class="col-3">
+            <div id="mainPage" class="row">
+                <div class="mainPageChild col-3">
                     <h1>Paramètres</h1>
                     <div>
                         <legend><i class="fas fa-play-circle"></i> Actions</legend>
@@ -80,7 +82,7 @@
                         <p>Vous pouvez déplacer les noeuds de départ et d'arrivée avec la souris (drag and drop).</p>
                     </div>
                 </div>
-                <div class="col-6 text-center">
+                <div class="mainPageChild col-6 text-center">
                     <div id="mazeParent" onload="mazeAnimation()"> 
                         <!-- maze will be insert here -->
                     </div>
@@ -91,7 +93,7 @@
                         <button id="downloadBtn" class="btn btn-primary" onclick="downloadMaze()">Télécharger (après résolution)</button>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="mainPageChild col-3">
                     <h1>Données</h1>
                     <legend><i class="fas fa-th"></i> Cellules générées</legend>
                     <p id="visitedCells" class="my-0">0 / 400</p>
@@ -109,7 +111,7 @@
             </div>
         </div>
     </body>
-    <footer>
+    <footer id="footer">
         <div class="text-center bg-dark py-2 text-light">
             <h5>&copy; Hugo Ducommun - ETML - DemoMot 2020</h5>
         </div>

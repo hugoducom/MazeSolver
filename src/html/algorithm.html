@@ -25,10 +25,12 @@
     </head>
     <body>
 
-        <a id="logo" class="navbar-brand" href="index.html">
-            <img src="../../resources/img/logo.png" width="45" height="30" alt="">
-        </a>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+                        <a id="logo" class="navbar-brand" href="index.html">
+                <img src="../../resources/img/logo.png" width="45" height="30" alt="">
+            </a>
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -45,7 +47,7 @@
             </div>
         </nav>
 
-        <div class="container">
+        <div class="container-fluid">
             <div class="text-center">
                 <h1 class="display-4 mt-2" id="title">Depth-first search</h1><br>
             </div>
@@ -74,7 +76,7 @@
             </p>
             <p>Voici une image pour vous appuyez dans la compréhension :</p>
             <div class="text-center mb-3">
-                <img src="../../resources/img/example.PNG" alt="Image d'exemple de la résolution du labyrinthe">
+                <img class="img-fluid" src="../../resources/img/example.PNG" alt="Image d'exemple de la résolution du labyrinthe">
             </div>
             <p>Et donc voici un pseudo-code très fancisé pour une compréhension optimale :</p>
             <ul>
@@ -103,43 +105,43 @@
             </div>
             <pre>
                 <code class="language-javascript">
-                    currentNode = cells[0][0];
+currentNode = cells[0][0];
 
-                    while (!isSolved) {
-                        currentNode.open = -1; // ferme le noeud
-                        let neighbours = currentNode.getReachableNeighbours();
+while (!isSolved) {
+    currentNode.open = -1; // ferme le noeud
+    let neighbours = currentNode.getReachableNeighbours();
 
-                        if (neighbours) {
-                            // s'il n'y a qu'une possibilité
-                            if (neighbours.length == 1) {
-                                neighbours[0].parent = currentNode;
-                                neighbours[0].open = 1; // ouvre le noeud
-                                currentNode = neighbours[0];
-                            } else {
-                                let dist = Infinity;
-                                // choisis le noeud le plus près de la cible
-                                for (let i = 0; i &lt; neighbours.length; i++) {
-                                    if (dist > distance(neighbours[i], targetNode)) {
-                                        dist = distance(neighbours[i], targetNode);
-                                        bestCell = neighbours[i];
-                                    }
-                                }
-                                bestCell.parent = currentNode;
-                                bestCell.open = 1; // ouvre le noeud
-                                currentNode = bestCell;
-                            }
-                        } else {
-                            // s'il n'y a aucun voisin libre
-                            currentNode.open = 2; // on bannit la cellule, car cul-de-sac
-                            currentNode = currentNode.parent;
-                        }
-                        
-                        // si le noeud obtenu est la cible, on arrête
-                        if (currentNode === targetNode) {
-                            currentNode.open = -1; // ferme le noeud
-                            isSolved = true;
-                        }
-                    }
+    if (neighbours) {
+        // s'il n'y a qu'une possibilité
+        if (neighbours.length == 1) {
+            neighbours[0].parent = currentNode;
+            neighbours[0].open = 1; // ouvre le noeud
+            currentNode = neighbours[0];
+        } else {
+            let dist = Infinity;
+            // choisis le noeud le plus près de la cible
+            for (let i = 0; i &lt; neighbours.length; i++) {
+                if (dist > distance(neighbours[i], targetNode)) {
+                    dist = distance(neighbours[i], targetNode);
+                    bestCell = neighbours[i];
+                }
+            }
+            bestCell.parent = currentNode;
+            bestCell.open = 1; // ouvre le noeud
+            currentNode = bestCell;
+        }
+    } else {
+        // s'il n'y a aucun voisin libre
+        currentNode.open = 2; // on bannit la cellule, car cul-de-sac
+        currentNode = currentNode.parent;
+    }
+    
+    // si le noeud obtenu est la cible, on arrête
+    if (currentNode === targetNode) {
+        currentNode.open = -1; // ferme le noeud
+        isSolved = true;
+    }
+}
                 </code>
             </pre>
 			<p>Le lien du code de ce site complet est disponible sur GitHub : <a href="https://github.com/hugoducom/MazeSolver" target="_blank">https://github.com/hugoducom/MazeSolver</a></p>

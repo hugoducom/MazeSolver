@@ -40,6 +40,7 @@ function setup() {
     // Création du canvas
     canvas = createCanvas(600, 600);
     canvas.parent("mazeParent");
+    windowResized();
     // Désactive les boutons qu'il faut
     document.getElementById("solveBtn").disabled = true;
     document.getElementById("clearBtn").disabled = true;
@@ -168,4 +169,19 @@ function draw() {
     // FIN ALGORITHME DE RÉSOLUTION
 
     document.getElementById("routeLength").innerHTML = openCells;
+}
+
+/*
+ * Fonction pour le responsive
+ */
+function windowResized() {
+    if (windowWidth > 1200) {
+        resizeCanvas(600, 600);
+    } else if (windowWidth <= 650) {
+        resizeCanvas(400, 400);
+    } else if (windowWidth <= 450) {
+        resizeCanvas(300, 300);
+    } else if (windowWidth <= 350) {
+        resizeCanvas(200, 200);
+    }
 }

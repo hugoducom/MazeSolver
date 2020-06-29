@@ -12,12 +12,14 @@ body {
 
 footer {
     position: fixed;
+    left: 0;
     bottom: 0;
     width: 100%;
 }
 
 #logo {
     position: absolute;
+    left: 0;
     z-index: 1;
     padding: 8px 16px;
 }
@@ -34,4 +36,30 @@ footer {
 
 #sideNumber, #mazeParent, #animationDisabled {
     margin-bottom: 10px;
+}
+
+/* MEDIA QUERIES */
+@media screen and (min-height: 1200px) {
+    footer {
+        position: relative;
+    }
+}
+ 
+@media screen and (max-width: 990px) {
+    #logo {
+        left: auto;
+        right: 0;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    #mainPage {
+        flex-direction: column;
+        align-content: center;
+    }
+
+    .mainPageChild {
+        align-self: center;
+        max-width: 100% !important;
+    }
 }
