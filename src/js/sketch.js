@@ -6,6 +6,7 @@
 */
 
 // GENERAL VARIABLES
+var alreadyLoad = false;
 var canvas; // canvas du labyrinthe
 var side = document.getElementById("sideNumber").value; // nombre de cellules sur les côtls du labyrinthe (labyrinthe carré)
 var cells = create2dArray(side, side); // tableau de toutes les cellules
@@ -33,14 +34,17 @@ var currentNode; // noeud actuellement analysé
 var targetNode; // noeud objectif
 var startNode; // noeud de départ
 
+
 /*
  * Fonction setup de la librairie p5.js
  */
 function setup() {
-    // Création du canvas
-    canvas = createCanvas(600, 600);
-    canvas.parent("mazeParent");
-    windowResized();
+    if (!alreadyLoad) {
+        // Création du canvas
+        canvas = createFirstCanvas();
+        canvas.parent("mazeParent");
+        alreadyLoad = true;
+    }
     // Désactive les boutons qu'il faut
     document.getElementById("solveBtn").disabled = true;
     document.getElementById("clearBtn").disabled = true;
@@ -60,7 +64,7 @@ function setup() {
     currentNode = cells[start[0]][start[1]];
 
     // Par défaut, la génération commence à la case de départ
-    current = cells[start[0]][start[1]]; 
+    current = cells[start[0]][start[1]];
 }
 
 /*
@@ -175,13 +179,45 @@ function draw() {
  * Fonction pour le responsive
  */
 function windowResized() {
-    if (windowWidth > 1200) {
-        resizeCanvas(600, 600);
-    } else if (windowWidth <= 650) {
-        resizeCanvas(400, 400);
-    } else if (windowWidth <= 450) {
-        resizeCanvas(300, 300);
-    } else if (windowWidth <= 350) {
-        resizeCanvas(200, 200);
+    if (windowWidth <= 350) {
+        resizeCanvas(200, 200, true);
+        modifySideNumber(); // redraw
+        redraw();
+        return;
     }
+    if (windowWidth <= 450) {
+        resizeCanvas(300, 300, true);
+        modifySideNumber();
+        redraw();
+        return;
+    }
+    if (windowWidth <= 650) {
+        resizeCanvas(400, 400, true);
+        modifySideNumber();
+        redraw();
+        return;
+    }
+    if (windowWidth > 1200) {
+        resizeCanvas(600, 600, true);
+        modifySideNumber();
+        redraw();
+        return;
+    }
+}
+
+/*
+ * Fonction pour le responsive (création du canvas)
+ * @return, canvas créé
+ */
+function createFirstCanvas() {
+    if (windowWidth <= 350) {
+        return createCanvas(200, 200);
+    }
+    if (windowWidth <= 450) {
+        return createCanvas(300, 300);
+    }
+    if (windowWidth <= 650) {
+        return createCanvas(400, 400);
+    }
+    return createCanvas(600, 600);
 }

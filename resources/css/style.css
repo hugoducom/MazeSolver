@@ -11,7 +11,7 @@ body {
 }
 
 footer {
-    position: fixed;
+    position: relative;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -39,12 +39,6 @@ footer {
 }
 
 /* MEDIA QUERIES */
-@media screen and (min-height: 1200px) {
-    footer {
-        position: relative;
-    }
-}
- 
 @media screen and (max-width: 990px) {
     #logo {
         left: auto;
