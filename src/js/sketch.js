@@ -6,7 +6,8 @@
 */
 
 // GENERAL VARIABLES
-var alreadyLoad = false;
+var previousWidth = 0; // précédente hauter (responsive)
+var alreadyLoad = false; // premier chargement de la page
 var canvas; // canvas du labyrinthe
 var side = document.getElementById("sideNumber").value; // nombre de cellules sur les côtls du labyrinthe (labyrinthe carré)
 var cells = create2dArray(side, side); // tableau de toutes les cellules
@@ -179,29 +180,37 @@ function draw() {
  * Fonction pour le responsive
  */
 function windowResized() {
-    if (windowWidth <= 350) {
-        resizeCanvas(200, 200, true);
-        modifySideNumber(); // redraw
-        redraw();
-        return;
-    }
-    if (windowWidth <= 450) {
-        resizeCanvas(300, 300, true);
-        modifySideNumber();
-        redraw();
-        return;
-    }
-    if (windowWidth <= 650) {
-        resizeCanvas(400, 400, true);
-        modifySideNumber();
-        redraw();
-        return;
-    }
-    if (windowWidth > 1200) {
-        resizeCanvas(600, 600, true);
-        modifySideNumber();
-        redraw();
-        return;
+    // évite les refresh quand on change de height (par exemple scroll sur téléhpone)
+    if (previousWidth != windowWidth) {
+        previousWidth = windowWidth;
+        if (windowWidth <= 350) {
+            resizeCanvas(200, 200, true);
+            noLoop(); // total redraw
+            setup();
+            loop();
+            return;
+        }
+        if (windowWidth <= 450) {
+            resizeCanvas(300, 300, true);
+            noLoop();
+            setup();
+            loop();
+            return;
+        }
+        if (windowWidth <= 650) {
+            resizeCanvas(400, 400, true);
+            noLoop();
+            setup();
+            loop();
+            return;
+        }
+        if (windowWidth > 1200) {
+            resizeCanvas(600, 600, true);
+            noLoop();
+            setup();
+            loop();
+            return;
+        }
     }
 }
 
