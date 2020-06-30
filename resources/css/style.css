@@ -21,6 +21,11 @@ footer {
     padding: 8px 16px;
 }
 
+#backBtn {
+    right: 0;
+    padding: 8px 16px;
+}
+
 #title {
     font-weight: 700;
 }
