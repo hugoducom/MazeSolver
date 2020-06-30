@@ -1,11 +1,4 @@
 /*
- * Lieu        : ETML, Lausanne
- * Auteur      : Hugo Ducommun
- * Date        : 19.06.2020
- * Description : Fonctions concernant la résolution du labyrinthe
-*/
-
-/*
  * Calcule la distance entre deux cases
  * @param start, case de départ [Cell]
  * @param goal, case objectif [Cell]

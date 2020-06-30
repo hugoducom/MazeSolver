@@ -1,8 +1,4 @@
 /*
- * Lieu        : ETML, Lausanne
- * Auteur      : Hugo Ducommun
- * Date        : 19.06.2020
- * Description : Fonctions concernant la génération du labyrinthe
  * Inspiration : https://www.youtube.com/watch?v=HyK_Q5rrcr4
 */
 

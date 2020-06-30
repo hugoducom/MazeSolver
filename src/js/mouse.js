@@ -1,11 +1,4 @@
 /*
- * Lieu        : ETML, Lausanne
- * Auteur      : Hugo Ducommun
- * Date        : 25.06.2020
- * Description : Fonctions concernant les intéractions avec la souris
-*/
-
-/*
  * Lorsque l'utilisateur clique (et reste appuyé)
  */
 function mousePressed() {

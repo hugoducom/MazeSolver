@@ -1,10 +1,3 @@
-/*
- * Lieu        : ETML, Lausanne
- * Auteur      : Hugo Ducommun
- * Date        : 11.06.2020
- * Description : Script de base de la librairie p5.js
-*/
-
 // GENERAL VARIABLES
 var previousWidth = 0; // précédente hauter (responsive)
 var alreadyLoad = false; // premier chargement de la page

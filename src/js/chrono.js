@@ -1,8 +1,4 @@
 /*
- * Lieu        : ETML, Lausanne
- * Auteur      : Hugo Ducommun
- * Date        : 23.06.2020
- * Description : Chrono pour le temps de résolution / génération
  * Inspiration : https://www.proglogic.com/code/javascript/time/chronometer.php
 */
 

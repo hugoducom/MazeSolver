@@ -1,8 +1,4 @@
 /*
- * Lieu        : ETML, Lausanne
- * Auteur      : Hugo Ducommun
- * Date        : 11.06.2020
- * Description : Classe d'une cellule (case du labyrinthe)
  * Inspiration : https://www.youtube.com/watch?v=HyK_Q5rrcr4
 */
 

@@ -1,11 +1,4 @@
 /*
- * Lieu        : ETML, Lausanne
- * Auteur      : Hugo Ducommun
- * Date        : 19.06.2020
- * Description : Fonctions utilitaires diverses du projet
-*/
-
-/*
  * Efface le labyrinthe déjà existant et restore les objets cellules
  */
 function clearMaze() {
