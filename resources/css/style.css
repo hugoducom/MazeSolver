@@ -6,15 +6,12 @@
 */
 
 body {
-    text-align: center;
     font-family: 'Roboto', sans-serif;
 }
 
 footer {
-    position: relative;
     left: 0;
     bottom: 0;
-    width: 100%;
 }
 
 #logo {
@@ -40,10 +37,7 @@ footer {
 
 #simplifiedCode {
     padding: 10px;
-    margin-left: auto;
-    margin-right: auto;
     border-radius: 10px;
-    background-color: #DCDCDC;
 }
 
 /* MEDIA QUERIES */
