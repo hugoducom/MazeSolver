@@ -57,6 +57,10 @@ function setup() {
     startNode = cells[start[0]][start[1]];
     currentNode = cells[start[0]][start[1]];
 
+    // Update l'affichage des coordonnées
+    document.getElementById("startCoord").innerHTML = "(" + start[0] + ", " + start[1] + ")";
+    document.getElementById("targetCoord").innerHTML = "(" + target[0] + ", " + target[1] + ")";
+
     // Par défaut, la génération commence à la case de départ
     current = cells[start[0]][start[1]];
 }
