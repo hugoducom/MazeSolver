@@ -21,6 +21,8 @@ Quant à l'algorithme utilisé, il s'agit du Depth-First Search un peu amélior�
 
 Enjoy !
 
+=> https://hugoducom.github.io/MazeSolver/
+
 ---
 
 ## ⛓️ Sources <a name = "idea"></a>
